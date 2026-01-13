@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pré-Anestesia: Formulário do Paciente</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f9ff;
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Critical CSS for offline support / fallback */
+        .hidden {
+            display: none !important;
+        }
+
+        .step-content {
+            transition: opacity 0.3s;
+        }
+
+        /* Basic styling fallbacks */
+        input,
+        select,
+        textarea {
+            border: 1px solid #ccc;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen pb-12">
+    <!-- Browser Warning (Visible by default, hidden by JS) -->
+    <div id="browser-warning"
+        style="background-color: #fee2e2; color: #991b1b; padding: 1rem; text-align: center; border-bottom: 1px solid #fecaca; font-weight: bold; font-family: sans-serif;">
+        ⚠️ AVISO: Se este formulário não funcionar corretamente, toque nos 3 pontinhos (ou opções) do aplicativo e
+        escolha "Abrir no Navegador" ou "Abrir no Chrome/Safari".
+    </div>
+    <script>
+        // Try to hide the warning immediately if JS is running
+        try { document.getElementById('browser-warning').style.display = 'none'; } catch (e) { }
+    </script>
+
+    <!-- Header -->
+    <div class="bg-blue-600 text-white p-6 shadow-lg mb-6">
+        <div class="max-w-md mx-auto">
+            <h1 class="text-2xl font-bold">Ficha Pré-Anestésica</h1>
+            <p class="opacity-90 text-sm mt-1">Preencha seus dados para agilizar seu atendimento</p>
+        </div>
+    </div>
+
+    <div class="max-w-md mx-auto px-4" id="app-container">
+        <!-- Step 1: Identificação -->
+        <div id="step-1" class="step-content">
+            <h2 class="text-xl font-semibold text-gray-800 flex items-center gap-2 mb-4">
+                <span
+                    class="bg-blue-100 text-blue-800 text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center">1</span>
+                Identificação
+            </h2>
+
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-blue-100 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+                    <input type="text" id="nome"
+                        class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none"
+                        placeholder="Seu nome" oninput="updateField('nome', this.value)">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Idade</label>
+                        <input type="number" id="idade"
+                            class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
+                            placeholder="Anos" oninput="updateField('idade', this.value)">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Sexo</label>
+                        <select id="sexo"
+                            class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
+                            onchange="updateField('sexo', this.value)">
+                            <option value="">Selecione</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Feminino</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Peso (kg)</label>
+                        <input type="number" id="peso" step="0.1"
+                            class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
+                            placeholder="00.0" oninput="updateField('peso', this.value)">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Altura (m)</label>
+                        <input type="number" id="altura" step="0.01"
+                            class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
+                            placeholder="0.00" oninput="updateField('altura', this.value)">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Profissão</label>
+                    <input type="text" id="profissao"
+                        class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
+                        oninput="updateField('profissao', this.value)">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Convênio</label>
+                    <input type="text" id="convenio"
+                        class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
+                        oninput="updateField('convenio', this.value)">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Cirurgia Proposta</label>
+                    <input type="text" id="cirurgia"
+                        class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
+                        oninput="updateField('cirurgia', this.value)">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Cirurgião</label>
+                    <input type="text" id="cirurgiao"
+                        class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
+                        oninput="updateField('cirurgiao', this.value)">
+                </div>
+            </div>
+
+            <button type="button" onclick="goToStep(2)"
+                class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transform active:scale-95 transition-all mt-6">
+                Próximo: Saúde & Anamnese
+            </button>
+        </div>
+
+        <!-- Step 2: Anamnese -->
+        <div id="step-2" class="step-content hidden">
+            <h2 class="text-xl font-semibold text-gray-800 flex items-center gap-2 mb-2">
+                <span
+                    class="bg-blue-100 text-blue-800 text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center">2</span>
+                Histórico de Saúde
+            </h2>
+            <p class="text-sm text-gray-500 mb-4">Marque apenas o que você TEM ou JÁ TEVE.</p>
+
+            <div class="bg-white p-2 rounded-xl shadow-sm border border-blue-100 divide-y divide-gray-100">
+                <div id="questions-list"></div>
+
+                <!-- Detalhes Alergia (Condicional) -->
+                <div id="alergia-details" class="hidden py-3 px-2 bg-red-50 rounded-lg mt-2 border border-red-100">
+                    <label class="block text-sm font-bold text-red-600 mb-2">Quais medicamentos tem alergia?</label>
+                    <textarea id="alergiaMedicamentoQual"
+                        class="w-full p-3 border border-red-200 rounded-lg bg-white focus:ring-red-500 focus:border-red-500 outline-none"
+                        placeholder="Ex: Dipirona, Penicilina..." rows="2"
+                        oninput="updateField('alergiaMedicamentoQual', this.value)"></textarea>
+                </div>
+
+                <div class="py-3 px-2 mt-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Medicamentos em uso (nome e
+                        dose)</label>
+                    <textarea id="medicamentos"
+                        class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white focus:border-blue-500 outline-none"
+                        placeholder="Ex: Losartana 50mg 1x ao dia..." rows="3"
+                        oninput="updateField('medicamentos', this.value)"></textarea>
+                </div>
+            </div>
+
+            <div class="flex gap-3 pt-6">
+                <button type="button" onclick="goToStep(1)"
+                    class="w-1/3 bg-gray-200 text-gray-700 font-bold py-4 rounded-xl hover:bg-gray-300 transition-all">
+                    Voltar
+                </button>
+                <button type="button" onclick="goToStep(3)"
+                    class="w-2/3 bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition-all">
+                    Finalizar
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 3: Exportar -->
+        <div id="step-3" class="step-content hidden text-center pt-8">
+            <div
+                class="bg-green-100 text-green-800 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <!-- Check Icon Big -->
+                <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-800">Tudo Pronto!</h2>
+            <p class="text-gray-600 mb-6">Agora você precisa enviar esses dados para o seu médico.</p>
+
+            <div class="space-y-4">
+                <button type="button" onclick="shareOnWhatsApp()"
+                    class="w-full bg-[#25D366] text-white font-bold py-4 rounded-xl shadow-lg hover:brightness-105 flex items-center justify-center gap-2 transition-all">
+                    <!-- WhatsApp Icon -->
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                    </svg>
+                    Enviar por WhatsApp
+                </button>
+
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-200"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm"><span class="px-2 bg-[#f0f9ff] text-gray-500">Ou
+                            se preferir</span></div>
+                </div>
+
+                <button type="button" id="btn-copy" onclick="copyToClipboard()"
+                    class="w-full bg-white border-2 border-blue-200 text-blue-600 font-bold py-4 rounded-xl hover:bg-blue-50 transition-all flex items-center justify-center gap-2">
+                    <!-- Copy Icon -->
+                    <svg id="icon-copy" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                    </svg>
+                    <!-- Check Icon (Hidden) -->
+                    <svg id="icon-check" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span id="text-copy">Copiar Texto dos Dados</span>
+                </button>
+
+                <p class="text-xs text-gray-500 mt-2">Se copiar o texto, envie-o manualmente para o seu médico (email,
+                    telegram, etc).</p>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <button type="button" onclick="goToStep(2)"
+                    class="text-gray-400 hover:text-gray-600 text-sm underline">Voltar e corrigir algo</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Error Handler
+        window.onerror = function (msg, url, line) {
+            alert("Erro no script: " + msg + " (Linha: " + line + ")");
+        };
+
+        // --- Data ---
+        var initialData = {
+            nome: '', idade: '', sexo: '', peso: '', altura: '', profissao: '', convenio: '', cirurgia: '', cirurgiao: '',
+            pressaoAlta: 'nao', diabetes: 'nao', infarto: 'nao', angina: 'nao', soproCardiaco: 'nao', arritmiaCardiaca: 'nao',
+            edemasMMII: 'nao', dispneiaDecubito: 'nao', asmaBronquite: 'nao', tosseCatarro: 'nao', fumante: 'nao',
+            desmaios: 'nao', convulsoes: 'nao', problemaColuna: 'nao', etilistaSocial: 'nao', etilistaCronico: 'nao',
+            doencaTireoide: 'nao', varizesMMII: 'nao', roncaApneia: 'nao', gastrite: 'nao', vomitaFacil: 'nao',
+            colesterolAlto: 'nao', triglicerideAlto: 'nao', perdaPeso: 'nao', hepatite: 'nao', anemia: 'nao',
+            sangramento: 'nao', hematomas: 'nao', gripeFebreRecente: 'nao', gravida: 'nao',
+            medicamentos: '', alergiaMedicamento: 'nao', alergiaMedicamentoQual: '', alergiaOutros: 'nao', alergiaOutrosQual: ''
+        };
+        var data = JSON.parse(JSON.stringify(initialData));
+
+        var questions = [
+            { key: 'pressaoAlta', label: 'Pressão Alta / Hipertensão' },
+            { key: 'diabetes', label: 'Diabetes' },
+            { key: 'asmaBronquite', label: 'Asma ou Bronquite' },
+            { key: 'fumante', label: 'Fumante' },
+            { key: 'alergiaMedicamento', label: 'Alergia a Medicamentos' },
+            { key: 'infarto', label: 'Infarto' },
+            { key: 'angina', label: 'Angina (Dor no peito)' },
+            { key: 'soproCardiaco', label: 'Sopro Cardíaco' },
+            { key: 'arritmiaCardiaca', label: 'Arritmia Cardíaca' },
+            { key: 'edemasMMII', label: 'Inchaço nas pernas' },
+            { key: 'dispneiaDecubito', label: 'Falta de ar ao deitar' },
+            { key: 'tosseCatarro', label: 'Tosse com catarro' },
+            { key: 'desmaios', label: 'Desmaios / Tonturas' },
+            { key: 'convulsoes', label: 'Convulsões' },
+            { key: 'problemaColuna', label: 'Problema de Coluna' },
+            { key: 'doencaTireoide', label: 'Doença da Tireoide' },
+            { key: 'varizesMMII', label: 'Varizes nas pernas' },
+            { key: 'roncaApneia', label: 'Ronco / Apneia do Sono' },
+            { key: 'gastrite', label: 'Gastrite / Refluxo' },
+            { key: 'vomitaFacil', label: 'Vomita com facilidade' },
+            { key: 'colesterolAlto', label: 'Colesterol Alto' },
+            { key: 'triglicerideAlto', label: 'Triglicérides Altos' },
+            { key: 'perdaPeso', label: 'Perda de peso sem motivo' },
+            { key: 'hepatite', label: 'Hepatite' },
+            { key: 'anemia', label: 'Anemia' },
+            { key: 'sangramento', label: 'Problema de sangramento' },
+            { key: 'hematomas', label: 'Manchas roxas fáceis' },
+            { key: 'gripeFebreRecente', label: 'Gripe ou Febre recente' }
+        ];
+
+        // --- Logic ---
+        function updateField(name, value) {
+            data[name] = value;
+        }
+
+        function setHealth(key, value) {
+            data[key] = value;
+            updateHealthUI(key, value);
+            if (key === 'alergiaMedicamento') {
+                var details = document.getElementById('alergia-details');
+                if (value === 'sim') {
+                    details.classList.remove('hidden');
+                } else {
+                    details.classList.add('hidden');
+                }
+            }
+        }
+
+        function updateHealthUI(key, value) {
+            var btnSim = document.getElementById('btn-sim-' + key);
+            var btnNao = document.getElementById('btn-nao-' + key);
+
+            if (!btnSim || !btnNao) return;
+
+            if (value === 'sim') {
+                btnSim.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all bg-red-100 text-red-600 ring-1 ring-red-200 shadow-sm";
+                btnNao.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all text-gray-400 hover:bg-gray-100";
+            } else {
+                btnSim.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all text-gray-400 hover:bg-gray-100";
+                btnNao.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all bg-gray-200 text-gray-700";
+            }
+        }
+
+        function goToStep(step) {
+            var steps = document.querySelectorAll('.step-content');
+            for (var i = 0; i < steps.length; i++) {
+                steps[i].classList.add('hidden');
+            }
+            var next = document.getElementById('step-' + step);
+            if (next) {
+                next.classList.remove('hidden');
+                window.scrollTo(0, 0);
+            } else {
+                alert("Erro: O passo " + step + " não foi encontrado.");
+            }
+        }
+
+        function generateCode() {
+            var json = JSON.stringify(data);
+            var b64 = btoa(unescape(encodeURIComponent(json)));
+            return 'PACIENTE_V1:' + b64;
+        }
+
+        function shareOnWhatsApp() {
+            var code = generateCode();
+            var text = 'Olá Doutor, aqui estão meus dados pré-anestésicos. Por favor copie o código abaixo e importe no seu sistema:\n\n' + code;
+            var url = 'https://wa.me/?text=' + encodeURIComponent(text);
+            window.open(url, '_blank');
+        }
+
+        function copyToClipboard() {
+            var code = generateCode();
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(code).then(showCopiedState).catch(function () { fallbackCopy(code); });
+            } else {
+                fallbackCopy(code);
+            }
+        }
+
+        function fallbackCopy(text) {
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                var successful = document.execCommand('copy');
+                if (successful) showCopiedState();
+                else alert('Não foi possível copiar automaticamente.');
+            } catch (err) {
+                alert('Não foi possível copiar automaticamente.');
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function showCopiedState() {
+            var btn = document.getElementById('btn-copy');
+            var iconCopy = document.getElementById('icon-copy');
+            var iconCheck = document.getElementById('icon-check');
+            var text = document.getElementById('text-copy');
+
+            btn.className = "w-full bg-green-50 border-2 border-green-500 text-green-700 font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2";
+            iconCopy.classList.add('hidden');
+            iconCheck.classList.remove('hidden');
+            text.textContent = "Dados Copiados!";
+
+            setTimeout(function () {
+                btn.className = "w-full bg-white border-2 border-blue-200 text-blue-600 font-bold py-4 rounded-xl hover:bg-blue-50 transition-all flex items-center justify-center gap-2";
+                iconCopy.classList.remove('hidden');
+                iconCheck.classList.add('hidden');
+                text.textContent = "Copiar Texto dos Dados";
+            }, 3000);
+        }
+
+        function initQuestions() {
+            var list = document.getElementById('questions-list');
+            if (!list) {
+                console.error("List container missing");
+                return;
+            }
+
+            list.innerHTML = "";
+
+            for (var i = 0; i < questions.length; i++) {
+                (function (q) {
+                    var div = document.createElement('div');
+                    div.className = "py-3 px-2 flex items-center justify-between hover:bg-gray-50 rounded-lg transition-colors";
+
+                    var labelSpan = document.createElement('span');
+                    labelSpan.className = "text-gray-700 font-medium";
+                    labelSpan.textContent = q.label;
+
+                    var btnContainer = document.createElement('div');
+                    btnContainer.className = "flex gap-2";
+
+                    var btnNao = document.createElement('button');
+                    btnNao.type = "button";
+                    btnNao.id = 'btn-nao-' + q.key;
+                    btnNao.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all bg-gray-200 text-gray-700";
+                    btnNao.textContent = "Não";
+                    btnNao.onclick = function () { setHealth(q.key, 'nao'); };
+
+                    var btnSim = document.createElement('button');
+                    btnSim.type = "button";
+                    btnSim.id = 'btn-sim-' + q.key;
+                    btnSim.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all text-gray-400 hover:bg-gray-100";
+                    btnSim.textContent = "Sim";
+                    btnSim.onclick = function () { setHealth(q.key, 'sim'); };
+
+                    btnContainer.appendChild(btnNao);
+                    btnContainer.appendChild(btnSim);
+
+                    div.appendChild(labelSpan);
+                    div.appendChild(btnContainer);
+
+                    list.appendChild(div);
+                })(questions[i]);
+            }
+        }
+
+        // Init
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initQuestions);
+        } else {
+            initQuestions();
+        }
+    </script>
+</body>
+
+</html>
