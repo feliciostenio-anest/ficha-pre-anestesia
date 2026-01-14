@@ -49,7 +49,6 @@
         escolha "Abrir no Navegador" ou "Abrir no Chrome/Safari".
     </div>
     <script>
-        // Try to hide the warning immediately if JS is running
         try { document.getElementById('browser-warning').style.display = 'none'; } catch (e) { }
     </script>
 
@@ -272,7 +271,17 @@
             { key: 'asmaBronquite', label: 'Asma ou Bronquite' },
             { key: 'fumante', label: 'Fumante' },
             { key: 'alergiaMedicamento', label: 'Alergia a Medicamentos' },
-            { key: 'infarto', label: 'Infarto' },
+
+            // Updated Infarto with Options
+            {
+                key: 'infarto', label: 'Infarto', options: [
+                    { value: 'nao', label: 'Não' },
+                    { value: '<3meses', label: 'Menos de 3 meses' },
+                    { value: '3-6 meses', label: '3 a 6 meses' },
+                    { value: '>6meses', label: 'Mais de 6 meses' }
+                ]
+            },
+
             { key: 'angina', label: 'Angina (Dor no peito)' },
             { key: 'soproCardiaco', label: 'Sopro Cardíaco' },
             { key: 'arritmiaCardiaca', label: 'Arritmia Cardíaca' },
@@ -319,6 +328,7 @@
             var btnSim = document.getElementById('btn-sim-' + key);
             var btnNao = document.getElementById('btn-nao-' + key);
 
+            // If UI elements don't exist (e.g. for select), just return
             if (!btnSim || !btnNao) return;
 
             if (value === 'sim') {
@@ -421,28 +431,49 @@
                     labelSpan.className = "text-gray-700 font-medium";
                     labelSpan.textContent = q.label;
 
-                    var btnContainer = document.createElement('div');
-                    btnContainer.className = "flex gap-2";
+                    // If question has options (Select)
+                    if (q.options) {
+                        var select = document.createElement('select');
+                        select.className = "p-2 border rounded-md bg-white text-gray-700 text-sm outline-none focus:ring-2 focus:ring-blue-200";
+                        // Update on change
+                        select.onchange = function (e) { setHealth(q.key, e.target.value); };
 
-                    var btnNao = document.createElement('button');
-                    btnNao.type = "button";
-                    btnNao.id = 'btn-nao-' + q.key;
-                    btnNao.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all bg-gray-200 text-gray-700";
-                    btnNao.textContent = "Não";
-                    btnNao.onclick = function () { setHealth(q.key, 'nao'); };
+                        q.options.forEach(function (opt) {
+                            var option = document.createElement('option');
+                            option.value = opt.value;
+                            option.textContent = opt.label;
+                            if (opt.value === 'nao') option.selected = true;
+                            select.appendChild(option);
+                        });
 
-                    var btnSim = document.createElement('button');
-                    btnSim.type = "button";
-                    btnSim.id = 'btn-sim-' + q.key;
-                    btnSim.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all text-gray-400 hover:bg-gray-100";
-                    btnSim.textContent = "Sim";
-                    btnSim.onclick = function () { setHealth(q.key, 'sim'); };
+                        div.appendChild(labelSpan);
+                        div.appendChild(select);
+                    }
+                    // Normal Yes/No Buttons
+                    else {
+                        var btnContainer = document.createElement('div');
+                        btnContainer.className = "flex gap-2";
 
-                    btnContainer.appendChild(btnNao);
-                    btnContainer.appendChild(btnSim);
+                        var btnNao = document.createElement('button');
+                        btnNao.type = "button";
+                        btnNao.id = 'btn-nao-' + q.key;
+                        btnNao.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all bg-gray-200 text-gray-700";
+                        btnNao.textContent = "Não";
+                        btnNao.onclick = function () { setHealth(q.key, 'nao'); };
 
-                    div.appendChild(labelSpan);
-                    div.appendChild(btnContainer);
+                        var btnSim = document.createElement('button');
+                        btnSim.type = "button";
+                        btnSim.id = 'btn-sim-' + q.key;
+                        btnSim.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all text-gray-400 hover:bg-gray-100";
+                        btnSim.textContent = "Sim";
+                        btnSim.onclick = function () { setHealth(q.key, 'sim'); };
+
+                        btnContainer.appendChild(btnNao);
+                        btnContainer.appendChild(btnSim);
+
+                        div.appendChild(labelSpan);
+                        div.appendChild(btnContainer);
+                    }
 
                     list.appendChild(div);
                 })(questions[i]);
