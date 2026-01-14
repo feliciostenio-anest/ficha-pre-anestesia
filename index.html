@@ -4,22 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pré-Anestesia: Formulário do Paciente</title>
+    <title>Pré-Anestesia: Dr. Felício Stenio</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Fonts: Inter + Playfair Display for elegance -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f9ff;
+            background-color: #FAFAF9;
+        }
+
+        /* Stone-50 background */
+        h1,
+        h2,
+        h3 {
+            font-family: 'Playfair Display', serif;
         }
 
         * {
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Critical CSS for offline support / fallback */
         .hidden {
             display: none !important;
         }
@@ -28,66 +36,84 @@
             transition: opacity 0.3s;
         }
 
-        /* Basic styling fallbacks */
+        /* Custom Elegant Input Styles */
         input,
         select,
         textarea {
-            border: 1px solid #ccc;
+            border: 1px solid #E7E5E4;
         }
 
-        button {
-            cursor: pointer;
+        /* Stone-200 */
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #4C5f48;
+            ring: 1px #4C5f48;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #D6D3D1;
+            border-radius: 3px;
         }
     </style>
 </head>
 
-<body class="min-h-screen pb-12">
-    <!-- Browser Warning (Visible by default, hidden by JS) -->
-    <div id="browser-warning"
-        style="background-color: #fee2e2; color: #991b1b; padding: 1rem; text-align: center; border-bottom: 1px solid #fecaca; font-weight: bold; font-family: sans-serif;">
-        ⚠️ AVISO: Se este formulário não funcionar corretamente, toque nos 3 pontinhos (ou opções) do aplicativo e
-        escolha "Abrir no Navegador" ou "Abrir no Chrome/Safari".
-    </div>
-    <script>
-        try { document.getElementById('browser-warning').style.display = 'none'; } catch (e) { }
-    </script>
+<body class="min-h-screen pb-12 text-[#292524]"> <!-- Stone-800 text -->
 
-    <!-- Header -->
-    <div class="bg-blue-600 text-white p-6 shadow-lg mb-6">
-        <div class="max-w-md mx-auto">
-            <h1 class="text-2xl font-bold">Ficha Pré-Anestésica</h1>
-            <p class="opacity-90 text-sm mt-1">Preencha seus dados para agilizar seu atendimento</p>
-        </div>
+    <!-- Browser Warning -->
+    <div id="browser-warning"
+        style="background-color: #FEE2E2; color: #991B1B; padding: 1rem; text-align: center; border-bottom: 1px solid #FECACA; font-weight: bold; font-family: sans-serif;">
+        ⚠️ AVISO: Se este formulário não funcionar, toque nos 3 pontinhos e escolha "Abrir no Navegador".
+    </div>
+    <script>try { document.getElementById('browser-warning').style.display = 'none'; } catch (e) { }</script>
+
+    <!-- Header Section -->
+    <div
+        class="bg-white border-b border-[#E7E5E4] pt-8 pb-6 px-4 shadow-sm mb-6 flex flex-col items-center justify-center text-center">
+        <!-- Logo -->
+        <img src="logo.png" alt="Dr. Felício Stenio" class="h-24 md:h-28 object-contain mb-4">
+
+        <h1 class="text-3xl text-[#2F3E30] font-bold tracking-tight">Ficha Pré-Anestésica</h1>
+        <p class="text-[#78716C] text-sm mt-2 max-w-sm font-light">
+            Por favor, preencha seus dados com atenção para agilizarmos o seu atendimento.
+        </p>
     </div>
 
     <div class="max-w-md mx-auto px-4" id="app-container">
         <!-- Step 1: Identificação -->
         <div id="step-1" class="step-content">
-            <h2 class="text-xl font-semibold text-gray-800 flex items-center gap-2 mb-4">
+            <h2 class="text-xl text-[#2F3E30] font-semibold flex items-center gap-3 mb-5">
                 <span
-                    class="bg-blue-100 text-blue-800 text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center">1</span>
+                    class="bg-[#2F3E30] text-white text-sm font-serif w-8 h-8 rounded-full flex items-center justify-center">1</span>
                 Identificação
             </h2>
 
-            <div class="bg-white p-5 rounded-xl shadow-sm border border-blue-100 space-y-4">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-[#E7E5E4] space-y-5">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+                    <label class="block text-xs uppercase tracking-wider text-[#A8A29E] font-semibold mb-1">Nome
+                        Completo</label>
                     <input type="text" id="nome"
-                        class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none"
+                        class="w-full p-3 bg-[#FAFAF9] rounded-lg outline-none transition-all placeholder-gray-400"
                         placeholder="Seu nome" oninput="updateField('nome', this.value)">
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Idade</label>
+                        <label
+                            class="block text-xs uppercase tracking-wider text-[#A8A29E] font-semibold mb-1">Idade</label>
                         <input type="number" id="idade"
-                            class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
-                            placeholder="Anos" oninput="updateField('idade', this.value)">
+                            class="w-full p-3 bg-[#FAFAF9] rounded-lg outline-none transition-all" placeholder="Anos"
+                            oninput="updateField('idade', this.value)">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Sexo</label>
-                        <select id="sexo"
-                            class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
+                        <label
+                            class="block text-xs uppercase tracking-wider text-[#A8A29E] font-semibold mb-1">Sexo</label>
+                        <select id="sexo" class="w-full p-3 bg-[#FAFAF9] rounded-lg outline-none transition-all"
                             onchange="updateField('sexo', this.value)">
                             <option value="">Selecione</option>
                             <option value="M">Masculino</option>
@@ -98,93 +124,101 @@
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Peso (kg)</label>
+                        <label class="block text-xs uppercase tracking-wider text-[#A8A29E] font-semibold mb-1">Peso
+                            (kg)</label>
                         <input type="number" id="peso" step="0.1"
-                            class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
-                            placeholder="00.0" oninput="updateField('peso', this.value)">
+                            class="w-full p-3 bg-[#FAFAF9] rounded-lg outline-none transition-all" placeholder="00.0"
+                            oninput="updateField('peso', this.value)">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Altura (m)</label>
+                        <label class="block text-xs uppercase tracking-wider text-[#A8A29E] font-semibold mb-1">Altura
+                            (m)</label>
                         <input type="number" id="altura" step="0.01"
-                            class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
-                            placeholder="0.00" oninput="updateField('altura', this.value)">
+                            class="w-full p-3 bg-[#FAFAF9] rounded-lg outline-none transition-all" placeholder="0.00"
+                            oninput="updateField('altura', this.value)">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Profissão</label>
+                    <label
+                        class="block text-xs uppercase tracking-wider text-[#A8A29E] font-semibold mb-1">Profissão</label>
                     <input type="text" id="profissao"
-                        class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
+                        class="w-full p-3 bg-[#FAFAF9] rounded-lg outline-none transition-all"
                         oninput="updateField('profissao', this.value)">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Convênio</label>
+                    <label
+                        class="block text-xs uppercase tracking-wider text-[#A8A29E] font-semibold mb-1">Convênio</label>
                     <input type="text" id="convenio"
-                        class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
+                        class="w-full p-3 bg-[#FAFAF9] rounded-lg outline-none transition-all"
                         oninput="updateField('convenio', this.value)">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Cirurgia Proposta</label>
+                    <label class="block text-xs uppercase tracking-wider text-[#A8A29E] font-semibold mb-1">Cirurgia
+                        Proposta</label>
                     <input type="text" id="cirurgia"
-                        class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
+                        class="w-full p-3 bg-[#FAFAF9] rounded-lg outline-none transition-all"
                         oninput="updateField('cirurgia', this.value)">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Cirurgião</label>
+                    <label
+                        class="block text-xs uppercase tracking-wider text-[#A8A29E] font-semibold mb-1">Cirurgião</label>
                     <input type="text" id="cirurgiao"
-                        class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white transition-all border-gray-200 focus:border-blue-500 outline-none"
+                        class="w-full p-3 bg-[#FAFAF9] rounded-lg outline-none transition-all"
                         oninput="updateField('cirurgiao', this.value)">
                 </div>
             </div>
 
             <button type="button" onclick="goToStep(2)"
-                class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transform active:scale-95 transition-all mt-6">
-                Próximo: Saúde & Anamnese
+                class="w-full bg-[#2F3E30] text-white font-serif font-bold py-4 rounded-xl shadow-md hover:bg-[#3F5240] transform active:scale-[0.99] transition-all mt-8 tracking-wide">
+                AVANÇAR PARA HISTÓRICO
             </button>
         </div>
 
         <!-- Step 2: Anamnese -->
         <div id="step-2" class="step-content hidden">
-            <h2 class="text-xl font-semibold text-gray-800 flex items-center gap-2 mb-2">
+            <h2 class="text-xl text-[#2F3E30] font-semibold flex items-center gap-3 mb-5">
                 <span
-                    class="bg-blue-100 text-blue-800 text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center">2</span>
+                    class="bg-[#2F3E30] text-white text-sm font-serif w-8 h-8 rounded-full flex items-center justify-center">2</span>
                 Histórico de Saúde
             </h2>
-            <p class="text-sm text-gray-500 mb-4">Marque apenas o que você TEM ou JÁ TEVE.</p>
+            <div class="bg-[#F5F5F4] p-3 text-sm rounded-lg text-[#57534E] mb-4 border border-[#E7E5E4] italic">
+                Por favor, marque apenas o que você TEM ou JÁ TEVE.
+            </div>
 
-            <div class="bg-white p-2 rounded-xl shadow-sm border border-blue-100 divide-y divide-gray-100">
+            <div class="bg-white p-3 rounded-xl shadow-sm border border-[#E7E5E4] divide-y divide-[#F5F5F4]">
                 <div id="questions-list"></div>
 
-                <!-- Detalhes Alergia (Condicional) -->
-                <div id="alergia-details" class="hidden py-3 px-2 bg-red-50 rounded-lg mt-2 border border-red-100">
-                    <label class="block text-sm font-bold text-red-600 mb-2">Quais medicamentos tem alergia?</label>
+                <!-- Detalhes Alergia -->
+                <div id="alergia-details" class="hidden py-4 px-3 bg-[#FEF2F2] rounded-lg mt-3 border border-red-100">
+                    <label class="block text-sm font-bold text-red-800 mb-2">Quais medicamentos tem alergia?</label>
                     <textarea id="alergiaMedicamentoQual"
-                        class="w-full p-3 border border-red-200 rounded-lg bg-white focus:ring-red-500 focus:border-red-500 outline-none"
+                        class="w-full p-3 border border-red-200 rounded-lg bg-white outline-none focus:border-red-500"
                         placeholder="Ex: Dipirona, Penicilina..." rows="2"
                         oninput="updateField('alergiaMedicamentoQual', this.value)"></textarea>
                 </div>
 
-                <div class="py-3 px-2 mt-2">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Medicamentos em uso (nome e
+                <div class="py-4 px-3 mt-2">
+                    <label class="block text-sm font-medium text-[#44403C] mb-2">Medicamentos em uso (nome e
                         dose)</label>
                     <textarea id="medicamentos"
-                        class="w-full p-3 border rounded-lg bg-gray-50 focus:bg-white focus:border-blue-500 outline-none"
+                        class="w-full p-3 bg-[#FAFAF9] rounded-lg outline-none transition-all focus:bg-white"
                         placeholder="Ex: Losartana 50mg 1x ao dia..." rows="3"
                         oninput="updateField('medicamentos', this.value)"></textarea>
                 </div>
             </div>
 
-            <div class="flex gap-3 pt-6">
+            <div class="flex gap-4 pt-8">
                 <button type="button" onclick="goToStep(1)"
-                    class="w-1/3 bg-gray-200 text-gray-700 font-bold py-4 rounded-xl hover:bg-gray-300 transition-all">
+                    class="w-1/3 bg-[#E7E5E4] text-[#57534E] font-bold py-4 rounded-xl hover:bg-[#D6D3D1] transition-all">
                     Voltar
                 </button>
                 <button type="button" onclick="goToStep(3)"
-                    class="w-2/3 bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition-all">
-                    Finalizar
+                    class="w-2/3 bg-[#2F3E30] text-white font-serif font-bold py-4 rounded-xl shadow-md hover:bg-[#3F5240] transition-all tracking-wide">
+                    FINALIZAR
                 </button>
             </div>
         </div>
@@ -192,20 +226,19 @@
         <!-- Step 3: Exportar -->
         <div id="step-3" class="step-content hidden text-center pt-8">
             <div
-                class="bg-green-100 text-green-800 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <!-- Check Icon Big -->
+                class="bg-[#DCFCE7] text-[#166534] w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
             </div>
 
-            <h2 class="text-2xl font-bold text-gray-800">Tudo Pronto!</h2>
-            <p class="text-gray-600 mb-6">Agora você precisa enviar esses dados para o seu médico.</p>
+            <h2 class="text-3xl font-bold text-[#2F3E30] mb-2">Tudo Pronto!</h2>
+            <p class="text-[#78716C] mb-8">Seus dados foram preenchidos.</p>
 
             <div class="space-y-4">
                 <button type="button" onclick="shareOnWhatsApp()"
-                    class="w-full bg-[#25D366] text-white font-bold py-4 rounded-xl shadow-lg hover:brightness-105 flex items-center justify-center gap-2 transition-all">
-                    <!-- WhatsApp Icon -->
+                    class="w-full bg-[#25D366] text-white font-bold py-4 rounded-xl shadow-lg hover:brightness-105 flex items-center justify-center gap-3 transition-all">
+                    <!-- WhatsApp -->
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                         <path
                             d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
@@ -222,7 +255,7 @@
                 </div>
 
                 <button type="button" id="btn-copy" onclick="copyToClipboard()"
-                    class="w-full bg-white border-2 border-blue-200 text-blue-600 font-bold py-4 rounded-xl hover:bg-blue-50 transition-all flex items-center justify-center gap-2">
+                    class="w-full bg-white border-2 border-[#E7E5E4] text-[#57534E] font-bold py-4 rounded-xl hover:bg-[#F5F5F4] transition-all flex items-center justify-center gap-2">
                     <!-- Copy Icon -->
                     <svg id="icon-copy" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -234,25 +267,19 @@
                     </svg>
                     <span id="text-copy">Copiar Texto dos Dados</span>
                 </button>
-
-                <p class="text-xs text-gray-500 mt-2">Se copiar o texto, envie-o manualmente para o seu médico (email,
-                    telegram, etc).</p>
             </div>
 
-            <div class="mt-8 pt-6 border-t border-gray-200">
+            <div class="mt-10 pt-6 border-t border-[#E7E5E4]">
                 <button type="button" onclick="goToStep(2)"
-                    class="text-gray-400 hover:text-gray-600 text-sm underline">Voltar e corrigir algo</button>
+                    class="text-[#A8A29E] hover:text-[#57534E] text-sm underline transition-colors">Voltar e corrigir
+                    algo</button>
             </div>
         </div>
     </div>
 
+    <!-- Script same as before, simplified logic maintained -->
     <script>
-        // Error Handler
-        window.onerror = function (msg, url, line) {
-            alert("Erro no script: " + msg + " (Linha: " + line + ")");
-        };
-
-        // --- Data ---
+        window.onerror = function (msg, url, line) { alert("Erro: " + msg + " (" + line + ")"); };
         var initialData = {
             nome: '', idade: '', sexo: '', peso: '', altura: '', profissao: '', convenio: '', cirurgia: '', cirurgiao: '',
             pressaoAlta: 'nao', diabetes: 'nao', infarto: 'nao', angina: 'nao', soproCardiaco: 'nao', arritmiaCardiaca: 'nao',
@@ -272,7 +299,7 @@
             { key: 'fumante', label: 'Fumante' },
             { key: 'alergiaMedicamento', label: 'Alergia a Medicamentos' },
 
-            // Updated Infarto with Options
+            // OPTIONS UPDATED
             {
                 key: 'infarto', label: 'Infarto', options: [
                     { value: 'nao', label: 'Não' },
@@ -306,74 +333,53 @@
             { key: 'gripeFebreRecente', label: 'Gripe ou Febre recente' }
         ];
 
-        // --- Logic ---
-        function updateField(name, value) {
-            data[name] = value;
-        }
+        function updateField(name, value) { data[name] = value; }
 
         function setHealth(key, value) {
             data[key] = value;
             updateHealthUI(key, value);
             if (key === 'alergiaMedicamento') {
                 var details = document.getElementById('alergia-details');
-                if (value === 'sim') {
-                    details.classList.remove('hidden');
-                } else {
-                    details.classList.add('hidden');
-                }
+                if (value === 'sim') { details.classList.remove('hidden'); }
+                else { details.classList.add('hidden'); }
             }
         }
 
         function updateHealthUI(key, value) {
             var btnSim = document.getElementById('btn-sim-' + key);
             var btnNao = document.getElementById('btn-nao-' + key);
-
-            // If UI elements don't exist (e.g. for select), just return
             if (!btnSim || !btnNao) return;
-
+            // Updated Colors for Elegant Theme (Red for alert, Grey for neutral)
             if (value === 'sim') {
-                btnSim.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all bg-red-100 text-red-600 ring-1 ring-red-200 shadow-sm";
-                btnNao.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all text-gray-400 hover:bg-gray-100";
+                btnSim.className = "px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-[#FECACA] text-[#991B1B] ring-1 ring-[#F87171] shadow-sm";
+                btnNao.className = "px-4 py-2 rounded-lg text-sm font-semibold transition-all text-[#A8A29E] hover:bg-[#F5F5F4]";
             } else {
-                btnSim.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all text-gray-400 hover:bg-gray-100";
-                btnNao.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all bg-gray-200 text-gray-700";
+                btnSim.className = "px-4 py-2 rounded-lg text-sm font-semibold transition-all text-[#A8A29E] hover:bg-[#F5F5F4]";
+                btnNao.className = "px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-[#E7E5E4] text-[#57534E]";
             }
         }
 
         function goToStep(step) {
             var steps = document.querySelectorAll('.step-content');
-            for (var i = 0; i < steps.length; i++) {
-                steps[i].classList.add('hidden');
-            }
+            for (var i = 0; i < steps.length; i++) { steps[i].classList.add('hidden'); }
             var next = document.getElementById('step-' + step);
-            if (next) {
-                next.classList.remove('hidden');
-                window.scrollTo(0, 0);
-            } else {
-                alert("Erro: O passo " + step + " não foi encontrado.");
-            }
+            if (next) { next.classList.remove('hidden'); window.scrollTo(0, 0); }
         }
 
         function generateCode() {
-            var json = JSON.stringify(data);
-            var b64 = btoa(unescape(encodeURIComponent(json)));
-            return 'PACIENTE_V1:' + b64;
+            return 'PACIENTE_V1:' + btoa(unescape(encodeURIComponent(JSON.stringify(data))));
         }
 
         function shareOnWhatsApp() {
-            var code = generateCode();
-            var text = 'Olá Doutor, aqui estão meus dados pré-anestésicos. Por favor copie o código abaixo e importe no seu sistema:\n\n' + code;
-            var url = 'https://wa.me/?text=' + encodeURIComponent(text);
-            window.open(url, '_blank');
+            var text = 'Olá Doutor, dados pré-anestésicos:\n\n' + generateCode();
+            window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
         }
 
         function copyToClipboard() {
             var code = generateCode();
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(code).then(showCopiedState).catch(function () { fallbackCopy(code); });
-            } else {
-                fallbackCopy(code);
-            }
+            } else { fallbackCopy(code); }
         }
 
         function fallbackCopy(text) {
@@ -382,15 +388,8 @@
             textArea.style.position = "fixed";
             textArea.style.left = "-9999px";
             document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            try {
-                var successful = document.execCommand('copy');
-                if (successful) showCopiedState();
-                else alert('Não foi possível copiar automaticamente.');
-            } catch (err) {
-                alert('Não foi possível copiar automaticamente.');
-            }
+            textArea.focus(); textArea.select();
+            try { if (document.execCommand('copy')) showCopiedState(); else alert('Erro ao copiar.'); } catch (e) { alert('Erro ao copiar.'); }
             document.body.removeChild(textArea);
         }
 
@@ -399,93 +398,60 @@
             var iconCopy = document.getElementById('icon-copy');
             var iconCheck = document.getElementById('icon-check');
             var text = document.getElementById('text-copy');
-
-            btn.className = "w-full bg-green-50 border-2 border-green-500 text-green-700 font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2";
-            iconCopy.classList.add('hidden');
-            iconCheck.classList.remove('hidden');
-            text.textContent = "Dados Copiados!";
-
+            btn.className = "w-full bg-[#DCFCE7] border-2 border-[#86EFAC] text-[#166534] font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2";
+            iconCopy.classList.add('hidden'); iconCheck.classList.remove('hidden'); text.textContent = "Dados Copiados!";
             setTimeout(function () {
-                btn.className = "w-full bg-white border-2 border-blue-200 text-blue-600 font-bold py-4 rounded-xl hover:bg-blue-50 transition-all flex items-center justify-center gap-2";
-                iconCopy.classList.remove('hidden');
-                iconCheck.classList.add('hidden');
-                text.textContent = "Copiar Texto dos Dados";
+                btn.className = "w-full bg-white border-2 border-[#E7E5E4] text-[#57534E] font-bold py-4 rounded-xl hover:bg-[#F5F5F4] transition-all flex items-center justify-center gap-2";
+                iconCopy.classList.remove('hidden'); iconCheck.classList.add('hidden'); text.textContent = "Copiar Texto dos Dados";
             }, 3000);
         }
 
         function initQuestions() {
             var list = document.getElementById('questions-list');
-            if (!list) {
-                console.error("List container missing");
-                return;
-            }
-
+            if (!list) return;
             list.innerHTML = "";
-
             for (var i = 0; i < questions.length; i++) {
                 (function (q) {
                     var div = document.createElement('div');
-                    div.className = "py-3 px-2 flex items-center justify-between hover:bg-gray-50 rounded-lg transition-colors";
-
+                    div.className = "py-4 px-3 flex items-center justify-between hover:bg-[#FAFAF9] rounded-lg transition-colors";
                     var labelSpan = document.createElement('span');
-                    labelSpan.className = "text-gray-700 font-medium";
+                    labelSpan.className = "text-[#44403C] font-medium";
                     labelSpan.textContent = q.label;
 
-                    // If question has options (Select)
                     if (q.options) {
                         var select = document.createElement('select');
-                        select.className = "p-2 border rounded-md bg-white text-gray-700 text-sm outline-none focus:ring-2 focus:ring-blue-200";
-                        // Update on change
+                        select.className = "p-2 border rounded-md bg-white text-[#44403C] text-sm outline-none focus:ring-1 focus:ring-[#4C5f48] focus:border-[#4C5f48]";
                         select.onchange = function (e) { setHealth(q.key, e.target.value); };
-
                         q.options.forEach(function (opt) {
                             var option = document.createElement('option');
-                            option.value = opt.value;
-                            option.textContent = opt.label;
+                            option.value = opt.value; option.textContent = opt.label;
                             if (opt.value === 'nao') option.selected = true;
                             select.appendChild(option);
                         });
-
-                        div.appendChild(labelSpan);
-                        div.appendChild(select);
-                    }
-                    // Normal Yes/No Buttons
-                    else {
+                        div.appendChild(labelSpan); div.appendChild(select);
+                    } else {
                         var btnContainer = document.createElement('div');
                         btnContainer.className = "flex gap-2";
-
                         var btnNao = document.createElement('button');
-                        btnNao.type = "button";
-                        btnNao.id = 'btn-nao-' + q.key;
-                        btnNao.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all bg-gray-200 text-gray-700";
+                        btnNao.type = "button"; btnNao.id = 'btn-nao-' + q.key;
+                        btnNao.className = "px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-[#E7E5E4] text-[#57534E]";
                         btnNao.textContent = "Não";
                         btnNao.onclick = function () { setHealth(q.key, 'nao'); };
-
                         var btnSim = document.createElement('button');
-                        btnSim.type = "button";
-                        btnSim.id = 'btn-sim-' + q.key;
-                        btnSim.className = "px-3 py-1 rounded-md text-sm font-semibold transition-all text-gray-400 hover:bg-gray-100";
+                        btnSim.type = "button"; btnSim.id = 'btn-sim-' + q.key;
+                        btnSim.className = "px-4 py-2 rounded-lg text-sm font-semibold transition-all text-[#A8A29E] hover:bg-[#F5F5F4]";
                         btnSim.textContent = "Sim";
                         btnSim.onclick = function () { setHealth(q.key, 'sim'); };
 
-                        btnContainer.appendChild(btnNao);
-                        btnContainer.appendChild(btnSim);
-
-                        div.appendChild(labelSpan);
-                        div.appendChild(btnContainer);
+                        btnContainer.appendChild(btnNao); btnContainer.appendChild(btnSim);
+                        div.appendChild(labelSpan); div.appendChild(btnContainer);
                     }
-
                     list.appendChild(div);
                 })(questions[i]);
             }
         }
 
-        // Init
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initQuestions);
-        } else {
-            initQuestions();
-        }
+        if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initQuestions); } else { initQuestions(); }
     </script>
 </body>
 
